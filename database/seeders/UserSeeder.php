@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
                 'name'     => 'Teste',
                 'password' => Crypt::encrypt('123456'),
             ]);
+
+            $this->command->info("Usuário de teste criado, Email:teste@teste.com.br, senha: 123456");
         }
     }
 }
