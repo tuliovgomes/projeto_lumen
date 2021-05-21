@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use App\Users;
 
 class UsersController extends Controller
 {
@@ -24,14 +25,17 @@ class UsersController extends Controller
             'password' => 'required'
         ]);
 
-        $user = Users::where('email', $request->input('email'))->first();
-        if (Hash::check($request->input('password'), $user->password)) {
-            $apiToken = base64_encode(str_random(40));
-            $user->update(['api_token' => "$apiToken"]);
+        $user = User::where('email', $request->input('email'))->first();
+        if ($user && Hash::check($request->input('password'), $user->password)) {
+            $apiToken = base64_encode(Str::random(40));
+            $user->forceFill(['api_token' => "$apiToken"]);
+            $user->save();
 
-            return response()->json(['status' => 'success','api_token' => $apiToken]);
+            return response()->json(['message' => 'success','api_token' => $apiToken]);
         } else {
-            return response()->json(['status' => 'fail'], 401);
+            return response()->json([
+                'message' => 'User not found or password incorrect'
+            ], 401);
         }
     }
 }

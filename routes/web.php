@@ -16,5 +16,6 @@
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     // Matches "/api/register
-    $router->get('login/','UsersController@authenticate');
+    $router->get('authenticate/','UsersController@authenticate');
+    $router->post('todo/','TodoController@store');
  });

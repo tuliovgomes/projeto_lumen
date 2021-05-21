@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -19,10 +19,10 @@ class UserSeeder extends Seeder
             User::create([
                 'email'    => 'teste@teste.com.br',
                 'name'     => 'Teste',
-                'password' => Crypt::encrypt('123456'),
+                'password' => Hash::make('123456'),
             ]);
 
-            $this->command->info("Usuário de teste criado, Email:teste@teste.com.br, senha: 123456");
+            $this->command->info("Email:teste@teste.com.br, Password:123456");
         }
     }
 }
