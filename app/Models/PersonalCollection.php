@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 class PersonalCollection extends Model{
     protected $table = "personal_collection";
 
-    // protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'type',
+        'contacts_id'
+    ];
 
-    // public $timestamps = false;
+    public $timestamps = false;
+
+    public function contacts()
+    {
+        return $this->belongsTo(Contacts::class);
+    }
 }

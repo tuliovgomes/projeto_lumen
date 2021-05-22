@@ -10,4 +10,10 @@ class ContactsController extends Controller
     {
         $this->middleware('auth:api');
     }
+
+
+    public function allContacts(Request $request)
+    {
+
+    }
 }
