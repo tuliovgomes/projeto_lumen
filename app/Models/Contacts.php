@@ -18,7 +18,7 @@ class Contacts extends Model {
     public $timestamps = true;
 
 
-    public function contacts()
+    public function loans()
     {
         return $this->hasMany(PersonalCollection::class);
     }

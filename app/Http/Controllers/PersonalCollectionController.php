@@ -63,32 +63,27 @@ class PersonalCollectionController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'personal_collection_id' => 'required',
+            'personal_collection_id' => 'exists:personal_collection,id',
         ]);
 
-        if ($PersonalCollection = PersonalCollection::find($request->personal_collection_id)) {
-            $this->validate($request, [
-                'type'        => "integer|between:1,3",
-                'contacts_id' => 'exists:contacts,id'
-            ]);
+        $PersonalCollection = PersonalCollection::find($request->personal_collection_id);
+        $this->validate($request, [
+            'type'        => "integer|between:1,3",
+            'contacts_id' => 'exists:contacts,id'
+        ]);
 
-            $PersonalCollection->update($request->all());
-            $PersonalCollection->save();
-
-            return response()->json([
-                'menssage' => 'success',
-            ]);
-        }
+        $PersonalCollection->update($request->all());
+        $PersonalCollection->save();
 
         return response()->json([
-            'menssage' => 'user not found.',
-        ], 400);
+            'menssage' => 'success',
+        ]);
     }
 
     public function find(Request $request)
     {
         $this->validate($request, [
-            'personal_collection_id' => 'required',
+            'personal_collection_id' => 'required|exists:personal_collection,id',
         ]);
 
         $PersonalCollection = PersonalCollection::selectRaw("
@@ -106,14 +101,8 @@ class PersonalCollectionController extends Controller
             ->where('personal_collection.id', $request->personal_collection_id)
             ->get();
 
-        if ($PersonalCollection) {
-            return response()->json([
-                'data' => $PersonalCollection,
-            ]);
-        };
-
         return response()->json([
-            'menssage' => 'Register of personal collection not found.',
-        ], 400);
+            'data' => $PersonalCollection,
+        ]);
     }
 }

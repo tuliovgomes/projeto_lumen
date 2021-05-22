@@ -30,8 +30,8 @@ class ContactsController extends Controller
     {
          $this->validate($request, [
             'name'  => 'required',
-            'email'  => 'required|email|max:255|unique:contacts',
-            'cell' => 'required',
+            'email' => 'required|email|max:255|unique:contacts',
+            'cell'  => 'required',
         ]);
 
         $contact = Contacts::create($request->all());
@@ -45,43 +45,45 @@ class ContactsController extends Controller
     public function update(Request $request)
     {
          $this->validate($request, [
-            'contact_id' => 'required',
+            'contact_id' => 'required|exists:contacts,id',
+            'name'       => 'required',
+            'email'      => "required|unique:contacts,email,contact_id|max:255",
+            'cell'       => 'required',
         ]);
 
-        if ($contact = Contacts::find($request->contact_id)) {
-            $this->validate($request, [
-                'name'  => 'required',
-                'email' => "required|unique:contacts,email,{$contact->id}|max:255",
-                'cell'  => 'required',
-            ]);
-
-            $contact->update($request->all());
-            $contact->save();
-
-            return response()->json([
-                'menssage' => 'success',
-            ]);
-        }
+        $contact = Contacts::find($request->contact_id);
+        $contact->update($request->all());
+        $contact->save();
 
         return response()->json([
-            'menssage' => 'user not found.',
-        ], 400);
+            'menssage' => 'success',
+        ]);
     }
 
     public function find(Request $request)
     {
         $this->validate($request, [
-            'contact_id' => 'required',
+            'contact_id' => 'required|exists:contacts,id',
         ]);
 
-        if ($contact = Contacts::find($request->contact_id)) {
-            return response()->json([
-                'data' => $contact,
-            ]);
-        };
+        $contact = Contacts::find($request->contact_id);
 
         return response()->json([
-            'menssage' => 'user not found.',
-        ], 400);
+            'data' => $contact,
+        ]);
+    }
+
+
+    public function allLoansWithContact(Request $request)
+    {
+        $this->validate($request, [
+            'contact_id' => 'required|exists:contacts,id',
+        ]);
+
+        $contact = Contacts::with('loans')->find($request->contact_id);
+
+        return response()->json([
+            'data' => $contact,
+        ]);
     }
 }

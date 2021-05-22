@@ -20,6 +20,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'contacts'], function () use ($router) {
         $router->get('allContacts','ContactsController@allContacts');
         $router->get('find','ContactsController@find');
+        $router->get('allLoansWithContact','ContactsController@allLoansWithContact');
         $router->post('create','ContactsController@create');
         $router->post('update','ContactsController@update');
     });
