@@ -2,19 +2,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PersonalCollection extends Model
 {
+    use  HasFactory;
+
     protected $table = "personal_collection";
 
     const TYPE_BOOK = 1;
     const TYPE_CD   = 2;
     const TYPE_DVD  = 3;
 
-    const TYPES     = [
+    const TYPES = [
         self::TYPE_BOOK => 'Book',
-        self::TYPE_CD => 'CD',
-        self::TYPE_DVD => 'DVD',
+        self::TYPE_CD   => 'CD',
+        self::TYPE_DVD  => 'DVD',
     ];
 
     protected $fillable = [
@@ -23,7 +26,7 @@ class PersonalCollection extends Model
         'contacts_id'
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function contacts()
     {
