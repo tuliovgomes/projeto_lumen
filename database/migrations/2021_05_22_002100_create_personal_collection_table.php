@@ -17,7 +17,7 @@ class CreatePersonalCollectionTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('type');
-            $table->unsignedBigInteger('contacts_id');
+            $table->unsignedBigInteger('contacts_id')->nullable();
 
             $table->foreign('contacts_id')->references('id')->on('contacts');
             $table->timestamps();
