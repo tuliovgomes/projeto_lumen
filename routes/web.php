@@ -17,11 +17,11 @@
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('authenticate','UsersController@authenticate');
 
-    $router->group(['prefix' => 'Contacts'], function () use ($router) {
+    $router->group(['prefix' => 'contacts'], function () use ($router) {
         $router->get('allContacts','PersonalCollectionController@allContacts');
     });
 
-    $router->group(['prefix' => 'PersonalCollection'], function () use ($router) {
+    $router->group(['prefix' => 'personalCollection'], function () use ($router) {
         $router->get('allCollection','PersonalCollectionController@allCollection');
     });
 });
