@@ -16,8 +16,13 @@ class PersonalCollectionController extends Controller
         $this->page     = $request->page ?? null;
     }
 
-    public function allCollection()
+    public function allCollection(Request $request)
     {
+        $sort = null;
+        if ($request->sort) {
+            $sort = PersonalCollection::sort()[$request->sort] ?? null;
+        }
+
         $query = PersonalCollection::selectRaw("
                 personal_collection.id,
                 title,
@@ -30,6 +35,9 @@ class PersonalCollectionController extends Controller
                 contacts.id as borrowed_id
             ")
             ->leftjoin('contacts', 'contacts.id', 'personal_collection.contacts_id')
+            ->when($sort, function ($query) use ($sort) {
+                $query->orderBy($sort, 'asc');
+            })
             ->paginate($this->paginate);
 
         return response()->json([

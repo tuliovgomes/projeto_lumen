@@ -32,4 +32,15 @@ class PersonalCollection extends Model
     {
         return $this->belongsTo(Contacts::class);
     }
+
+    public static function sort() 
+    {
+        return [
+            'id'            => 'personal_collection.id',
+            'title'         => 'personal_collection.title',
+            'type'          => 'personal_collection.type',
+            'borrowed_with' => 'contacts.name',
+            'borrowed_id'   => 'contacts.id',
+        ];
+    }
 }
