@@ -16,9 +16,19 @@ class PersonalCollectionController extends Controller
         $this->page     = $request->page ?? null;
     }
 
-    public function allCollection(Request $request)
+    public function allCollection()
     {
-        $query = PersonalCollection::paginate($this->paginate);
+        $query = PersonalCollection::selectRaw("
+                title,
+                CASE type
+                    WHEN 1 THEN 'Book'
+                    WHEN 2 THEN 'CD'
+                    ELSE 'DVD'
+                END as type,
+                contacts.name as borrowed_with
+            ")
+            ->leftjoin('contacts', 'contacts.id', 'personal_collection.contacts_id')
+            ->paginate($this->paginate);
 
         return response()->json([
             'data' => $query,
