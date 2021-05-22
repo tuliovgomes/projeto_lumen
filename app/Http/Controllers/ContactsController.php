@@ -6,14 +6,22 @@ use App\Models\Contacts;
 
 class ContactsController extends Controller
 {
-    public function __construct()
+    private $paginate;
+    private $page;
+
+    public function __construct(Request $request)
     {
         $this->middleware('auth:api');
+        $this->paginate = $request->paginate;
+        $this->page     = $request->page ?? null;
     }
 
-
-    public function allContacts(Request $request)
+    public function allContacts()
     {
+        $query = Contacts::paginate($this->paginate);
 
+        return response()->json([
+            'data' => $query,
+        ]);
     }
 }
