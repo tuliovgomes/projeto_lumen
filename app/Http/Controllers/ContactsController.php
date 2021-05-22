@@ -24,4 +24,64 @@ class ContactsController extends Controller
             'data' => $query,
         ]);
     }
+
+
+    public function create(Request $request)
+    {
+         $this->validate($request, [
+            'name'  => 'required',
+            'email'  => 'required|email|max:255|unique:contacts',
+            'cell' => 'required',
+        ]);
+
+        $contact = Contacts::create($request->all());
+
+        return response()->json([
+            'menssage' => 'success',
+            'contact_id' => $contact->id
+        ], 201);
+    }
+
+    public function update(Request $request)
+    {
+         $this->validate($request, [
+            'contact_id' => 'required',
+        ]);
+
+        if ($contact = Contacts::find($request->contact_id)) {
+            $this->validate($request, [
+                'name'  => 'required',
+                'email' => "required|unique:contacts,email,{$contact->id}|max:255",
+                'cell'  => 'required',
+            ]);
+
+            $contact->update($request->all());
+            $contact->save();
+
+            return response()->json([
+                'menssage' => 'success',
+            ]);
+        }
+
+        return response()->json([
+            'menssage' => 'user not found.',
+        ], 400);
+    }
+
+    public function find(Request $request)
+    {
+        $this->validate($request, [
+            'contact_id' => 'required',
+        ]);
+
+        if ($contact = Contacts::find($request->contact_id)) {
+            return response()->json([
+                'data' => $contact,
+            ]);
+        };
+
+        return response()->json([
+            'menssage' => 'user not found.',
+        ], 400);
+    }
 }

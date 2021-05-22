@@ -19,9 +19,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->group(['prefix' => 'contacts'], function () use ($router) {
         $router->get('allContacts','ContactsController@allContacts');
+        $router->get('find','ContactsController@find');
+        $router->post('create','ContactsController@create');
+        $router->post('update','ContactsController@update');
     });
 
     $router->group(['prefix' => 'personalCollection'], function () use ($router) {
         $router->get('allCollection','PersonalCollectionController@allCollection');
+        $router->get('types','PersonalCollectionController@types');
     });
 });
