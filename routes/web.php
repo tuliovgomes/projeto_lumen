@@ -27,5 +27,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'personalCollection'], function () use ($router) {
         $router->get('allCollection','PersonalCollectionController@allCollection');
         $router->get('types','PersonalCollectionController@types');
+        $router->get('find','PersonalCollectionController@find');
+        $router->post('create','PersonalCollectionController@create');
+        $router->post('update','PersonalCollectionController@update');
     });
 });

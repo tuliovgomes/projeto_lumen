@@ -28,7 +28,7 @@ class PersonalCollection extends Model
 
     public $timestamps = true;
 
-    public function contacts()
+    public function contact()
     {
         return $this->belongsTo(Contacts::class);
     }

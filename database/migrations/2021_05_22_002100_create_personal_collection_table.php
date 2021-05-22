@@ -16,7 +16,7 @@ class CreatePersonalCollectionTable extends Migration
         Schema::create('personal_collection', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('type');
+            $table->integer('type');
             $table->unsignedBigInteger('contacts_id')->nullable();
 
             $table->foreign('contacts_id')->references('id')->on('contacts');
