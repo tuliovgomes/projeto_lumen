@@ -16,9 +16,17 @@ class ContactsController extends Controller
         $this->page     = $request->page ?? null;
     }
 
-    public function allContacts()
+    public function allContacts(Request $request)
     {
-        $query = Contacts::paginate($this->paginate);
+        $sort = null;
+        if ($request->sort) {
+            $sort = Contacts::sort()[$request->sort] ?? null;
+        }
+
+        $query = Contacts::when($sort, function ($query) use ($sort) {
+                $query->orderBy($sort, 'asc');
+            })
+            ->paginate($this->paginate);
 
         return response()->json([
             'data' => $query,

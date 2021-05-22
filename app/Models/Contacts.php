@@ -22,4 +22,14 @@ class Contacts extends Model {
     {
         return $this->hasMany(PersonalCollection::class);
     }
+
+    public static function sort()
+    {
+        return [
+            'id'    => 'contacts.id',
+            'name'  => 'contacts.name',
+            'email' => 'contacts.email',
+            'cell'  => 'contacts.cell',
+        ];
+    }
 }
