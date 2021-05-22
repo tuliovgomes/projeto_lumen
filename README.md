@@ -11,7 +11,7 @@
 - update (atualizar item) (POST) /api/personalCollection/update
 - create (criar um item) (POST) /api/personalCollection/create
 
-# ROUTE Contacts
+# ROUTE contacts
 - allContacts (listar todos contatos) (GET) /api/contacts/allContacts?paginate=10&page=1&sort=name
 - find  (ver contato especifico) (GET)  /api/contacts/find?personal_collection_id=1 
 - allLoansWithContact (ver todos os itens emprestados com um contato especifico) (GET) /api/contacts/allLoansWithContact?contact_id=1
