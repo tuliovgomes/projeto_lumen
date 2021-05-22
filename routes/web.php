@@ -15,7 +15,13 @@
 
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    // Matches "/api/register
     $router->get('authenticate/','UsersController@authenticate');
     $router->post('todo/','TodoController@store');
- });
+
+    $router->group(['prefix' => 'Contacts'], function () use ($router) {
+    });
+
+    $router->group(['prefix' => 'PersonalCollection'], function () use ($router) {
+    });
+
+});
